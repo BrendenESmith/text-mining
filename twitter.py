@@ -1,4 +1,10 @@
 import tweepy
+import nltk
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+
+# sentence = "Dune's visuals were so stunning"
+# score = SentimentIntensityAnalyzer().polarity_scores(sentence)
+# print(score)
 
 
 # Keys and secrets
@@ -11,12 +17,25 @@ BEARER_TOKEN = "AAAAAAAAAAAAAAAAAAAAAKObVAEAAAAASmYKqe7QJEqJpHRcDgvGSmKnSqI%3DQs
 
 # Authenticate to Twitter
 auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
-auth.set_access_token(CONSUMER_KEY,TOKEN_SECRET)
+auth.set_access_token(TOKEN,TOKEN_SECRET)
 
 api = tweepy.API(auth)
 
-for tweet in api.search_tweets(q="covid vaccine", lang="en", rpp = 10):
-    print(f"{tweet.user.name}: {tweet.text}")
-
-# for tweet in api.search_30_day(label = "30DaySearch", query = "Dune", maxResults = 10):
+# for tweet in api.search_tweets(q="Dune", lang="en", count = 5):
 #     print(f"{tweet.user.name}: {tweet.text}")
+
+tweet_counter = 0
+total_compound = 0
+for tweet in api.search_30_day(label = "30DaySearch", query = "Biden", maxResults = 100):
+    if "RT" not in tweet.text:
+        print(f"{tweet.user.name} at {tweet.created_at}: {tweet.text}")
+        score = SentimentIntensityAnalyzer().polarity_scores(tweet.text)
+        compound = score["compound"]
+        total_compound = total_compound + compound
+        print(f"Sentiment Score: {score}")
+        print()
+        tweet_counter += 1
+        if tweet_counter >= 10:
+            break
+
+print(f"Total compound score: {total_compound}; Average compound score: {(total_compound/10)}")
