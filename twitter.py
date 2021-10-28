@@ -53,11 +53,17 @@ def tweet_sentiments(topic, num_of_tweets):
     print(f"Total absolute compound score: {total_abs_compound}; Average absolute compound score: {avg_abs_compound_score}")
     print(f"Standard deviation: {standard_deviation}")
 
+# Uncomment the following line to run the Tweet sentiment analysis function:
 # tweet_sentiments("pizza", 50)
 
 
 def tweet_grammar(handle, no_of_tweets):
-    """"""
+    """This function takes in a Twitter handle from a user (excluding "@") and the maximum number of tweets
+    from that handle they'd like to analyze, and it then prints a number of tweets and prints a sorted list
+    of the number of different parts of speech found across the tweets.
+    
+    Note: The number of tweets requested is referred to as the maximum because the function filters out retweets, however
+    when it pulls tweets from Twitter.com, it includes the retweets in the count."""
     # Keys and secrets
     TOKEN = '1049810324365430786-L0iaMkrCz1uNxygUycZFdFhExC4ULT'
     TOKEN_SECRET = 'vmoBdQ9Q96LEif5hIxyOVao3KQgO4ZSROs9bMbnprthK1'
@@ -73,8 +79,11 @@ def tweet_grammar(handle, no_of_tweets):
     api = tweepy.API(auth)
 
     grammar_dict = dict()
+    proportion = dict()
     for tweet in api.user_timeline(screen_name = handle, count = no_of_tweets, include_rts = False):
         print(tweet.text)
+        print()
+        # Learned nltk functions on textminingonline.com
         text = nltk.word_tokenize(tweet.text)
         grammar_list = (nltk.pos_tag(text))
         for tup in grammar_list:
@@ -82,7 +91,9 @@ def tweet_grammar(handle, no_of_tweets):
                 grammar_dict[tup[1]] = 1
             else:
                 grammar_dict[tup[1]] += 1
-        print(sorted(grammar_dict.items(), key = lambda item: item[1], reverse = True))
-        print()
 
-tweet_grammar("POTUS", 5)
+    # Learned sorting in descending order from SlackOverflow
+    print(sorted(grammar_dict.items(), key = lambda item: item[1], reverse = True))
+
+# Uncomment following line to run the grammar-analysis function
+# tweet_grammar("Babson", 5)
