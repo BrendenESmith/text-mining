@@ -41,7 +41,7 @@ def tweet_sentiments(topic, num_of_tweets):
                     break
 
     # Learned of statistics package on Slack overflow
-    print(tweet_list_compounds)
+    print(f"List of compound scores for the above tweets: {tweet_list_compounds}")
     total_compound = sum(tweet_list_compounds)
     avg_compound_score = statistics.mean(tweet_list_compounds)
     abs_compounds = [abs(x) for x in tweet_list_compounds]
@@ -54,7 +54,7 @@ def tweet_sentiments(topic, num_of_tweets):
     print(f"Standard deviation: {standard_deviation}")
 
 # Uncomment the following line to run the Tweet sentiment analysis function:
-# tweet_sentiments("pizza", 50)
+#tweet_sentiments("pizza", 10)
 
 
 def tweet_grammar(handle, no_of_tweets):
@@ -96,4 +96,4 @@ def tweet_grammar(handle, no_of_tweets):
     print(sorted(grammar_dict.items(), key = lambda item: item[1], reverse = True))
 
 # Uncomment following line to run the grammar-analysis function
-# tweet_grammar("Babson", 5)
+tweet_grammar("Babson", 5)
