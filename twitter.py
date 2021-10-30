@@ -54,7 +54,7 @@ def tweet_sentiments(topic, num_of_tweets):
     print(f"Standard deviation: {standard_deviation}")
 
 # Uncomment the following line to run the Tweet sentiment analysis function:
-#tweet_sentiments("pizza", 10)
+tweet_sentiments("pizza", 50)
 
 
 def tweet_grammar(handle, no_of_tweets):
@@ -96,4 +96,4 @@ def tweet_grammar(handle, no_of_tweets):
     print(sorted(grammar_dict.items(), key = lambda item: item[1], reverse = True))
 
 # Uncomment following line to run the grammar-analysis function
-tweet_grammar("Babson", 5)
+# tweet_grammar("babson", 10)
